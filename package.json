@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "1. 필요한 라이브러리    React, Express, Babel, Webpack, Node 기반 개발 환경 준비",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
-    "@babel/preset-env": "^7.29.0"
+    "@babel/preset-env": "^7.29.0",
+    "nodemon": "^3.1.11"
   }
 }
