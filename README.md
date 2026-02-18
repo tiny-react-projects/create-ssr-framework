@@ -66,6 +66,13 @@ const appHtml = render();
 1. client 번들
 
 ```javascript
+// server.js
+app.use("/dist", express.static(path.resolve(__dirname, "dist")));
+```
+
+- 여기서 제공되는 파일은 브라우저가 다운로드해서 Hydration 할 client.bundle.js뿐
+
+```javascript
   entry: "./src/client.jsx",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -78,10 +85,16 @@ const appHtml = render();
 - public path가 /dist/로 설정되어 있으면, webpack은 모든 동적 import나 asset 요청을 /dist/ 기준으로 찾는다.
 - 서버 번들은 브라우저에서 직접 로드되지 않고, node환경에서 require로 불러오기 때문에 public path가 필요없다.
 
-2. server bundle
+2. server 번들
 
-- libraryTarget은 Webpack이 번들을 어떤 방식으로 내보낼지 설정
-- 서버에서는 Node.js가 require()를 통해 모듈을 불러오기 때문에 "commonjs2"로 설정
+```javascript
+// server.js
+const render = require("./dist/server.bundle.js").default;
+```
+
+- 서버 번들은 node.js 용으로 만들어짐. 위와 같이 require로 바로 불러와서 render시킨다.
+- node환경이므로 브라우저에서는 사용하지 않음
+- 따라서 express.static 같은 정적 파일 서빙에 포함되지 않아 있다
 
 ```javascript
   entry: "./src/client.jsx",
@@ -90,4 +103,13 @@ const appHtml = render();
     filename: "server.bundle.js",
     libraryTarget: "commonjs2",
    }
+```
+
+- libraryTarget은 Webpack이 번들을 어떤 방식으로 내보낼지 설정
+- 서버에서는 Node.js가 require()를 통해 모듈을 불러오기 때문에 "commonjs2"로 설정
+  요약
+
+```md
+1. server bundle: node.js전용, 서버에서 render()함수 실행용
+2. client bundle: 브라우저 전용, Hydration/CSR용
 ```

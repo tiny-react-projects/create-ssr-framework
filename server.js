@@ -4,6 +4,7 @@ const render = require("./dist/server.bundle.js").default;
 
 const app = express();
 
+// 정적 파일 서빙
 app.use("/dist", express.static(path.resolve(__dirname, "dist")));
 app.get("/", (req, res) => {
   const appHtml = render();
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
       </head>
       <body>
         <div id="root">${appHtml}</div>
+        <script src="./dist/client.bundle.js"></script>
       </body>
     </html>
   `;
