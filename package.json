@@ -4,9 +4,12 @@
   "description": "1. 필요한 라이브러리    React, Express, Babel, Webpack, Node 기반 개발 환경 준비",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.server.js",
-    "start": "node server.js"
+    "build:client": "webpack --config webpack.client.js",
+    "build:server": "webpack --config webpack.server.js",
+    "build": "npm run build:client && npm run build:server",
+    "dev": "npm run build && npm run start",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
